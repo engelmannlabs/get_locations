@@ -1,6 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+function FormattedDate() {
+  const [mounted, setMounted] = useState(false);
+  const [date, setDate] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+    setDate(new Date());
+  }, []);
+
+  if (!mounted || !date) return <p className="text-green-100 text-sm mt-1">&nbsp;</p>;
+
+  return (
+    <p className="text-green-100 text-sm mt-1">
+      {date.toLocaleDateString('pt-BR')} às {date.toLocaleTimeString('pt-BR')}
+    </p>
+  );
+}
 
 export default function Home() {
   const [showReceipt, setShowReceipt] = useState(false);
@@ -65,7 +83,7 @@ export default function Home() {
               </svg>
             </div>
             <h2 className="text-white text-xl font-bold">Transferência Realizada!</h2>
-            <p className="text-green-100 text-sm mt-1">{new Date().toLocaleDateString('pt-BR')} às {new Date().toLocaleTimeString('pt-BR')}</p>
+            <FormattedDate />
           </div>
           
           <div className="p-6 space-y-4">
